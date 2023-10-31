@@ -160,3 +160,5 @@ function Square(x, y, size, color) {
 }
 
 /// addition lmao
+
+// did that work?
