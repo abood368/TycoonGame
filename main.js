@@ -1,3 +1,5 @@
+// Store canvas in Javascript Variable
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
@@ -40,7 +42,7 @@ canvas.addEventListener('mousemove', (event) => {
 canvas.addEventListener('click', (e) => {
   mouse.clickedX = e.layerX;
   mouse.clickedY = e.layerY;
-  // mouse.clickedX = true;
+  grid.render();
 });
 
 const grid = {
@@ -104,17 +106,17 @@ const grid = {
     }
     this.render();
   },
-
-  random: () => {
-    let intervalId = setInterval(() => {}, 1000);
-  },
 };
 
 grid.create();
 
 function playGame() {
   grid.reset(); // this should be grid.reset()
-  grid.squares[Math.floor(Math.random() * grid.squares.length)].color = 'white'; // get a random square and change its color.
+  let intervalId = setInterval(() => {
+    let randomSquare =
+      grid.squares[Math.floor(Math.random() * grid.squares.length)]; // get a random square and change its color.
+    randomSquare.fade();
+  }, 2000);
 }
 
 // ELEMENTS IN CANVAS
@@ -129,7 +131,7 @@ function Square(x, y, size, color) {
   this.dx = 1;
   this.dy = 1;
   this.ds = 1;
-  let currentColor = 'black';
+  let currentColor = 'rgba(0,0,0,1)'; // black
   this.draw = () => {
     c.fillStyle = this.color;
     c.fillRect(this.x, this.y, this.size, this.size);
@@ -137,13 +139,14 @@ function Square(x, y, size, color) {
   };
   this.update = () => {
     if (
-      this.color !== 'white' &&
       mouse.x > this.x &&
       mouse.x < this.x + this.size &&
       mouse.y > this.y &&
       mouse.y < this.y + this.size
     ) {
-      this.color = 'rgba(255,255,255,0.1)';
+      if (this.color !== 'rgba(255,255,255,1)') {
+        this.color = 'rgba(255,255,255,0.1)'; // light white
+      }
     } else if (!mouse.clicked) {
       this.color = currentColor;
     }
@@ -153,14 +156,15 @@ function Square(x, y, size, color) {
       mouse.clickedY > this.y &&
       mouse.clickedY < this.y + this.size
     ) {
-      currentColor = 'white';
+      currentColor = 'rgba(255,255,255,1)'; // white
+      this.color = currentColor;
     }
     this.draw();
   };
+
+  /* this.fade = function () {
+    let intervalId = setInterval(() => {
+
+    })
+  }; */
 }
-
-// From Laptop btw
-
-// from laptop 2 btw 2
-
-// configure me lmao please.
