@@ -162,3 +162,5 @@ function Square(x, y, size, color) {
 // From Laptop btw
 
 // from laptop 2 btw 2
+
+// configure me lmao please.
