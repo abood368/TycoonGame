@@ -158,3 +158,5 @@ function Square(x, y, size, color) {
     this.draw();
   };
 }
+
+/// addition lmao
