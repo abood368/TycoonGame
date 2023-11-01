@@ -9,6 +9,18 @@ body {
   font-family: 'Public Pixel', sans-serif;
 }
 
+button {
+  font-family: 'Public Pixel', sans-serif;
+  padding: 1em;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.75;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -31,4 +43,11 @@ canvas {
   font-size: 2rem;
   color: white;
   top: -12%;
+}
+
+#restart {
+  position: absolute;
+  font-size: 1.5rem;
+  color: white;
+  bottom: -20%;
 }

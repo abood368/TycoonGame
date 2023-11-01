@@ -30,6 +30,12 @@ const mouse = {
   y: undefined,
   clickedX: undefined,
   clickedY: undefined,
+  reset: function () {
+    this.x = undefined;
+    this.y = undefined;
+    this.clickedX = undefined;
+    this.clickedY = undefined;
+  },
 };
 canvas.addEventListener('mousemove', (event) => {
   mouse.x = event.layerX;
@@ -100,11 +106,20 @@ const grid = {
 
   // resets the color or anything else back to it's original.
 
-  reset: () => {
+  reset: function () {
+    mouse.reset();
     for (let s of this.squares) {
       s.color = 'black';
     }
     this.render();
+  },
+
+  random: function () {
+    let randomSquare =
+      grid.squares[Math.floor(Math.random() * grid.squares.length)];
+    randomSquare.color = 'white';
+    grid.render();
+    console.log(randomSquare);
   },
 };
 
@@ -131,7 +146,6 @@ function Square(x, y, size, color) {
   this.dx = 1;
   this.dy = 1;
   this.ds = 1;
-  let currentColor = 'rgba(0,0,0,1)'; // black
   this.draw = () => {
     c.fillStyle = this.color;
     c.fillRect(this.x, this.y, this.size, this.size);
@@ -147,8 +161,9 @@ function Square(x, y, size, color) {
       if (this.color !== 'rgba(255,255,255,1)') {
         this.color = 'rgba(255,255,255,0.1)'; // light white
       }
-    } else if (!mouse.clicked) {
-      this.color = currentColor;
+    } else if (this.color !== 'rgba(255,255,255,1)') {
+      // flawed logic
+      this.color = 'rgba(0,0,0,1)';
     }
     if (
       mouse.clickedX > this.x &&
@@ -156,8 +171,7 @@ function Square(x, y, size, color) {
       mouse.clickedY > this.y &&
       mouse.clickedY < this.y + this.size
     ) {
-      currentColor = 'rgba(255,255,255,1)'; // white
-      this.color = currentColor;
+      this.color = 'rgba(255,255,255,1)';
     }
     this.draw();
   };
