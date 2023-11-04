@@ -180,11 +180,13 @@ function Square(x, y, size, color) {
   };
   this.update = () => {
     // split the update function to multiple functions, each having a different purpose. Having everything in one function makes the logic hard to track the problem with this function is that you can't modify the colors of the squares at all when you are drawing out the squares later.
+
     if (
       mouse.clickedX > this.x &&
       mouse.clickedX < this.x + this.size &&
       mouse.clickedY > this.y &&
-      mouse.clickedY < this.y + this.size
+      mouse.clickedY < this.y + this.size &&
+      this.color !== 'rgba(255,255,255,1'
     ) {
       this.color = 'rgba(255,255,255,1';
       money++;

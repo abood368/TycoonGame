@@ -1,0 +1,2 @@
+In order to only update one square when the canvas is clicked, 
+you need some sort of formula that translates the mouseX and mouseY values to the current squares X and Y coordinates on the canvas. Since the size of the squares and their positions are dependent on the canvas size, the formula must not have a set size when it is written. 
