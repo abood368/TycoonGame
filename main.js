@@ -2,6 +2,8 @@
 
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+const balance = document.querySelector('#balance');
+let money = 0;
 
 // Figured out how to make <canvas> responsive down below.
 
@@ -12,17 +14,13 @@ function setUpCanvas() {
 
   return canvas.width;
 }
+setUpCanvas(); // render the canvas for the first time
 
 // All the Event Listeners
 
 window.addEventListener('resize', () => {
-  // add all the render functions inside this resize event listener.
-  //setUpCanvas();
   grid.resize();
-  // grid.render();
 });
-
-setUpCanvas(); // render the canvas for the first time
 
 const mouse = {
   // track the mouse postions for interactivity
@@ -41,15 +39,14 @@ canvas.addEventListener('mousemove', (event) => {
   mouse.x = event.layerX;
   mouse.y = event.layerY;
 
-  c.clearRect(0, 0, setUpCanvas(), setUpCanvas());
-  grid.render();
+  grid.highlight();
 });
 
 canvas.addEventListener('click', (e) => {
   mouse.clickedX = e.layerX;
   mouse.clickedY = e.layerY;
   grid.render();
-});
+}); // can we add this to each individual square? (no I tried lol)
 
 const grid = {
   size: 10,
@@ -70,7 +67,7 @@ const grid = {
           j * this.squareSize(), // x
           i * this.squareSize(), // y
           this.squareSize(), //  size
-          'black' // color
+          'rgba(0,0,0,1)' // color
         );
         this.squares.push(s);
       }
@@ -84,6 +81,12 @@ const grid = {
   render: function () {
     for (let s of this.squares) {
       s.update();
+    }
+  },
+
+  highlight: function () {
+    for (let s of this.squares) {
+      s.highlight();
     }
   },
 
@@ -106,24 +109,31 @@ const grid = {
 
   // resets the color or anything else back to it's original.
 
-  reset: function () {
-    mouse.reset();
-    for (let s of this.squares) {
-      s.color = 'black';
+  random: function () {
+    for (let i = 0; i < 10; i++) {
+      let randomSquare =
+        grid.squares[Math.floor(Math.random() * grid.squares.length)];
+      randomSquare.color = 'rgba(255,255,255,1)';
+      randomSquare.draw();
     }
-    this.render();
   },
 
-  random: function () {
-    let randomSquare =
-      grid.squares[Math.floor(Math.random() * grid.squares.length)];
-    randomSquare.color = 'white';
-    grid.render();
-    console.log(randomSquare);
+  // Resets everything
+
+  reset: function () {
+    mouse.reset(); // reset the mouse position so that the last square does not stay white.
+    money = 0;
+    balance.textContent = `$${money}`;
+    for (let s of this.squares) {
+      s.color = 'rgba(0,0,0,1)';
+    }
+    this.render();
+    this.render();
   },
 };
 
 grid.create();
+grid.random();
 
 function playGame() {
   grid.reset(); // this should be grid.reset()
@@ -139,46 +149,49 @@ function playGame() {
 function Square(x, y, size, color) {
   this.x = x;
   this.y = y;
-  this.originalX = this.x;
-  this.originalY = this.y;
+  // this.originalX = this.x;
+  // this.originalY = this.y;
   this.size = size;
   this.color = color;
-  this.dx = 1;
-  this.dy = 1;
-  this.ds = 1;
+  // this.dx = 1;
+  // this.dy = 1;
+  // this.ds = 1;
   this.draw = () => {
     c.fillStyle = this.color;
     c.fillRect(this.x, this.y, this.size, this.size);
     c.fill();
   };
-  this.update = () => {
+
+  this.highlight = function () {
+    // Set a new highlight function, that only highlights on square at a time, and does not need to clear the canvas each time.
     if (
       mouse.x > this.x &&
       mouse.x < this.x + this.size &&
       mouse.y > this.y &&
       mouse.y < this.y + this.size
     ) {
-      if (this.color !== 'rgba(255,255,255,1)') {
+      if (this.color === 'rgba(0,0,0,1)' || this.color === 'black') {
         this.color = 'rgba(255,255,255,0.1)'; // light white
       }
-    } else if (this.color !== 'rgba(255,255,255,1)') {
-      // flawed logic
+    } else if (this.color === 'rgba(255,255,255,0.1)') {
       this.color = 'rgba(0,0,0,1)';
     }
+    this.draw();
+  };
+  this.update = () => {
+    // split the update function to multiple functions, each having a different purpose. Having everything in one function makes the logic hard to track the problem with this function is that you can't modify the colors of the squares at all when you are drawing out the squares later.
     if (
       mouse.clickedX > this.x &&
       mouse.clickedX < this.x + this.size &&
       mouse.clickedY > this.y &&
       mouse.clickedY < this.y + this.size
     ) {
-      this.color = 'rgba(255,255,255,1)';
+      this.color = 'rgba(255,255,255,1';
+      money++;
+      balance.textContent = `$${money}`;
+      // mouse.clickedX = undefined;
+      // mouse.clickedY = undefined;
     }
     this.draw();
   };
-
-  /* this.fade = function () {
-    let intervalId = setInterval(() => {
-
-    })
-  }; */
 }
