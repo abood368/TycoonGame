@@ -197,3 +197,5 @@ function Square(x, y, size, color) {
     this.draw();
   };
 }
+
+// hello, this is from the laptop
