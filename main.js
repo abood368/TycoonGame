@@ -2,8 +2,6 @@
 
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-const balance = document.querySelector('#balance');
-let money = 0;
 
 // Figured out how to make <canvas> responsive down below.
 
@@ -38,13 +36,14 @@ const mouse = {
 canvas.addEventListener('mousemove', (event) => {
   mouse.x = event.layerX;
   mouse.y = event.layerY;
-
+  c.clearRect(0, 0, setUpCanvas(), setUpCanvas());
   grid.highlight();
 });
 
 canvas.addEventListener('click', (e) => {
   mouse.clickedX = e.layerX;
   mouse.clickedY = e.layerY;
+  c.clearRect(0, 0, setUpCanvas(), setUpCanvas());
   grid.render();
 }); // can we add this to each individual square? (no I tried lol)
 
@@ -109,21 +108,9 @@ const grid = {
 
   // resets the color or anything else back to it's original.
 
-  random: function () {
-    for (let i = 0; i < 10; i++) {
-      let randomSquare =
-        grid.squares[Math.floor(Math.random() * grid.squares.length)];
-      randomSquare.color = 'rgba(255,255,255,1)';
-      randomSquare.draw();
-    }
-  },
-
-  // Resets everything
-
   reset: function () {
     mouse.reset(); // reset the mouse position so that the last square does not stay white.
-    money = 0;
-    balance.textContent = `$${money}`;
+    user.reset();
     for (let s of this.squares) {
       s.color = 'rgba(0,0,0,1)';
     }
@@ -133,16 +120,7 @@ const grid = {
 };
 
 grid.create();
-grid.random();
-
-function playGame() {
-  grid.reset(); // this should be grid.reset()
-  let intervalId = setInterval(() => {
-    let randomSquare =
-      grid.squares[Math.floor(Math.random() * grid.squares.length)]; // get a random square and change its color.
-    randomSquare.fade();
-  }, 2000);
-}
+// grid.random();
 
 // ELEMENTS IN CANVAS
 
@@ -156,6 +134,7 @@ function Square(x, y, size, color) {
   // this.dx = 1;
   // this.dy = 1;
   // this.ds = 1;
+  this.clicked = false;
   this.draw = () => {
     c.fillStyle = this.color;
     c.fillRect(this.x, this.y, this.size, this.size);
@@ -185,14 +164,15 @@ function Square(x, y, size, color) {
       mouse.clickedX > this.x &&
       mouse.clickedX < this.x + this.size &&
       mouse.clickedY > this.y &&
-      mouse.clickedY < this.y + this.size &&
-      this.color !== 'rgba(255,255,255,1'
+      mouse.clickedY < this.y + this.size
     ) {
-      this.color = 'rgba(255,255,255,1';
-      money++;
-      balance.textContent = `$${money}`;
-      // mouse.clickedX = undefined;
-      // mouse.clickedY = undefined;
+      if (this.color === 'rgba(255,255,255,1)' || this.color === 'white') {
+        if (!this.clicked) {
+          user.scored();
+          this.clicked = true;
+          mouse.reset();
+        }
+      }
     }
     this.draw();
   };
