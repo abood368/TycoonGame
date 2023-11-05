@@ -28,7 +28,7 @@ const user = {
 // Now create the game functionality:
 
 function random() {
-  let filteredGrid = []-;
+  let filteredGrid = [];
   let intervalId = setInterval(() => {
     if (!filteredGrid.length) {
       filteredGrid = grid.squares.filter((square) => {
