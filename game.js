@@ -28,17 +28,32 @@ const user = {
 // Now create the game functionality:
 
 function random() {
+  let filteredGrid = []-;
   let intervalId = setInterval(() => {
-    let randomSquare =
-      grid.squares[Math.floor(Math.random() * grid.squares.length)];
-    randomSquare.color = 'rgba(255,255,255,1)';
-    randomSquare.draw();
-  }, 1000);
-}
+    if (!filteredGrid.length) {
+      filteredGrid = grid.squares.filter((square) => {
+        if (square.color !== 'rgba(255,255,255,1)') {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      console.log(filteredGrid);
+    } else if (filteredGrid.length) {
+      filteredGrid = filteredGrid.filter((square) => {
+        if (square.color !== 'rgba(255,255,255,1)') {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
 
-for (let i = 0; i < 10; i++) {
-  let randomSquare =
-    grid.squares[Math.floor(Math.random() * grid.squares.length)];
-  randomSquare.color = 'rgba(255,255,255,1)';
-  randomSquare.draw();
+    if (filteredGrid.length) {
+      let randomIndex = Math.floor(Math.random() * filteredGrid.length);
+      filteredGrid[randomIndex].color = 'rgba(255,255,255,1)';
+      filteredGrid[randomIndex].draw();
+    }
+  }, 500);
 }
+random();

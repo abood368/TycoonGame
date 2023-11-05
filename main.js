@@ -48,7 +48,7 @@ canvas.addEventListener('click', (e) => {
 }); // can we add this to each individual square? (no I tried lol)
 
 const grid = {
-  size: 10,
+  size: 7,
   squares: [],
   squareSize: () => {
     setUpCanvas(); // This ensures that the square size is relative to the current canvas size.
@@ -169,7 +169,7 @@ function Square(x, y, size, color) {
       if (this.color === 'rgba(255,255,255,1)' || this.color === 'white') {
         if (!this.clicked) {
           user.scored();
-          this.clicked = true;
+          this.color = 'rgba(0,0,0,1)';
           mouse.reset();
         }
       }
