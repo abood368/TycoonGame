@@ -25,9 +25,67 @@ const user = {
   },
 };
 
+// function randomize() {
+//   let randomIndex = Math.floor(Math.random() * grid.squares.length);
+//   let randomSquare = grid.squares[randomIndex];
+//   randomSquare.color = 'rgba(255,255,255,1)';
+//   grid.render();
+// }
+
+// let intervalId = setInterval(() => {
+//   grid.clear();
+//   randomize();
+// }, 1000);
+
+let randomSquare;
+
+function appear() {
+  return new Promise((resolve, reject) => {
+    let squareRendered = false;
+    setTimeout(() => {
+      let randomIndex = Math.floor(Math.random() * grid.squares.length);
+      randomSquare = grid.squares[randomIndex];
+      randomSquare.color = 'rgba(255,255,255,1)';
+      grid.render();
+      squareRendered = true;
+      if (squareRendered) {
+        resolve('Square Rendered Successfully');
+      } else {
+        reject('There was an error.');
+      }
+    }, 1000);
+  });
+}
+
+function disappear() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      randomSquare.color = 'rgba(0,0,0,1)';
+      grid.render();
+      if (randomSquare.color === 'rgba(0,0,0,1)') {
+        resolve('it turned black');
+      } else {
+        reject('error');
+      }
+    }, 1000);
+  });
+}
+
+async function playGame() {
+  for (let i = 0; i < 100; i++) {
+    await appear()
+      .then(disappear)
+      .catch((err) => console.log(err));
+  }
+}
+
+playGame();
+
 // Now create the game functionality:
 
-function random() {
+// Random Squares appearing function
+
+/* function random() {
   let filteredGrid = [];
   let intervalId = setInterval(() => {
     if (!filteredGrid.length) {
@@ -38,7 +96,6 @@ function random() {
           return false;
         }
       });
-      console.log(filteredGrid);
     } else if (filteredGrid.length) {
       filteredGrid = filteredGrid.filter((square) => {
         if (square.color !== 'rgba(255,255,255,1)') {
@@ -54,6 +111,6 @@ function random() {
       filteredGrid[randomIndex].color = 'rgba(255,255,255,1)';
       filteredGrid[randomIndex].draw();
     }
-  }, 500);
+  }, 1000);
 }
-random();
+random(); */

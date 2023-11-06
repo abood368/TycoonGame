@@ -117,6 +117,14 @@ const grid = {
     this.render();
     this.render();
   },
+
+  clear: function () {
+    for (let s of this.squares) {
+      s.color = 'rgba(0,0,0,1)';
+    }
+    this.render();
+    this.render();
+  },
 };
 
 grid.create();
