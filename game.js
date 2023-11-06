@@ -5,7 +5,7 @@ let money = 0;
 
 const user = {
   money: 0,
-  multiplier: 2,
+  multiplier: 1,
 
   // refreshes the score
   // call this function everytime the score changes
@@ -72,18 +72,16 @@ function disappear() {
 }
 
 async function playGame() {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 1000; i++) {
     await appear()
       .then(disappear)
       .catch((err) => console.log(err));
   }
 }
 
-playGame();
+// playGame();
 
-// Now create the game functionality:
-
-// Random Squares appearing function
+// Random Squares appearing function Gamemode:
 
 /* function random() {
   let filteredGrid = [];

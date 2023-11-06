@@ -11,11 +11,17 @@
     <header></header>
 
     <main class="container">
+      <section class="menu">
+        <button id="menu">Menu</button>
+        <span id="balance">$0</span>
+        <button id="shop">Shop</button>
+      </section>
       <canvas></canvas>
-      <section id="balance">$0</section>
-      <button id="restart" onclick="grid.reset();">Restart</button>
+      <footer class="footer">
+        <button id="restart" onclick="grid.reset();">Reset</button>
+        <button id="startGame" onclick="playGame()">Start</button>
+      </footer>
     </main>
-    <footer></footer>
 
     <script src="main.js"></script>
     <script src="game.js"></script>
