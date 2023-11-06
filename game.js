@@ -71,11 +71,15 @@ function disappear() {
   });
 }
 
+let gameStart = false;
 async function playGame() {
-  for (let i = 0; i < 1000; i++) {
-    await appear()
-      .then(disappear)
-      .catch((err) => console.log(err));
+  if (!gameStart) {
+    for (let i = 0; i < 1000; i++) {
+      gameStart = true;
+      await appear()
+        .then(disappear)
+        .catch((err) => console.log(err));
+    }
   }
 }
 
