@@ -111,6 +111,7 @@ const grid = {
   reset: function () {
     mouse.reset(); // reset the mouse position so that the last square does not stay white.
     user.reset();
+    gameStart = false;
     for (let s of this.squares) {
       s.color = 'rgba(0,0,0,1)';
     }
@@ -184,6 +185,10 @@ function Square(x, y, size, color) {
     }
     this.draw();
   };
+}
+
+function clearCanvas() {
+  c.clearRect(0, 0, setUpCanvas(), setUpCanvas());
 }
 
 // hello, this is from the laptop
