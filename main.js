@@ -191,4 +191,16 @@ function clearCanvas() {
   c.clearRect(0, 0, setUpCanvas(), setUpCanvas());
 }
 
+function hide(element) {
+  let htmlElement = document.getElementById(`${element}`);
+
+  if (htmlElement) {
+    if (htmlElement.hasAttribute('hidden')) {
+      htmlElement.removeAttribute('hidden');
+    } else {
+      htmlElement.setAttribute('hidden', true);
+    }
+  }
+}
+
 // hello, this is from the laptop
