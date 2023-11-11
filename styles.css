@@ -8,6 +8,7 @@ body {
   min-height: 100vh;
   font-family: 'Public Pixel', sans-serif;
   position: relative;
+  overflow: auto;
 }
 
 button {
@@ -41,7 +42,7 @@ canvas {
 
 .top-bar {
   position: absolute;
-  top: -14%;
+  top: -60px;
   max-height: 10vh;
   display: flex;
   justify-content: space-between;
@@ -86,7 +87,7 @@ canvas {
 .footer {
   display: flex;
   position: absolute;
-  bottom: -14%;
+  bottom: -60px;
   max-height: 12vh;
   width: 100%;
   justify-content: space-around;
