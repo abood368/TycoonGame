@@ -17,7 +17,8 @@ setUpCanvas(); // render the canvas for the first time
 // All the Event Listeners
 
 window.addEventListener('resize', () => {
-  // grid.resize();
+  clearCanvas();
+  squareSize = canvas.width / 6; // 6 refers to how many squares can fit in one row / column, you can change that as a variable.
 });
 
 const mouse = {
@@ -41,9 +42,9 @@ function Square(x, y, size, color = 'rgba(0,0,0,1)') {
   this.y = y;
   this.size = size;
   this.color = color;
-
   this.clicked = false;
   this.draw = () => {
+    c.strokeStyle = 'transparent';
     c.fillStyle = this.color;
     c.fillRect(this.x, this.y, this.size, this.size);
     c.fill();

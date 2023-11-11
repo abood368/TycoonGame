@@ -24,17 +24,38 @@ const shapes = {
       }
     }
   },
+
+  isMouseOver: function () {
+    for (let shape of this.list) {
+      if (
+        mouse.x > shape.x &&
+        mouse.x < shape.x + shape.size &&
+        mouse.y > shape.y &&
+        mouse.y < shape.y + shape.size
+      ) {
+        if (shape.color === 'rgba(255,255,255,1)' || shape.color === 'white') {
+          if (!shape.clicked) {
+            user.scored();
+            shape.color = 'rgba(0,0,0,1)';
+            shape.draw();
+            mouse.reset();
+          }
+        }
+      }
+    }
+  },
 };
 
 canvas.addEventListener('mousemove', (event) => {
   mouse.x = event.layerX;
   mouse.y = event.layerY;
+  shapes.isMouseOver();
 });
 
 canvas.addEventListener('click', (e) => {
   mouse.clickedX = e.layerX;
   mouse.clickedY = e.layerY;
-  shapes.isClicked();
+  // shapes.isClicked();
 });
 
 const user = {
@@ -59,11 +80,12 @@ const user = {
   },
 };
 
+let squareSize = canvas.width / 6; // 6 refers to how many squares can fit in one row / column, you can change that as a variable.
+
 function appear() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       clearCanvas();
-      let squareSize = 50;
       let randomX = Math.random() * (setUpCanvas() - squareSize);
       let randomY = Math.random() * (setUpCanvas() - squareSize);
       let square = new Square(
@@ -114,38 +136,5 @@ async function playGame() {
 
 function endGame() {
   gameStart = false;
+  user.reset();
 }
-
-// playGame();
-
-// Random Squares appearing function Gamemode:
-
-/* function random() {
-  let filteredGrid = [];
-  let intervalId = setInterval(() => {
-    if (!filteredGrid.length) {
-      filteredGrid = grid.squares.filter((square) => {
-        if (square.color !== 'rgba(255,255,255,1)') {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    } else if (filteredGrid.length) {
-      filteredGrid = filteredGrid.filter((square) => {
-        if (square.color !== 'rgba(255,255,255,1)') {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
-
-    if (filteredGrid.length) {
-      let randomIndex = Math.floor(Math.random() * filteredGrid.length);
-      filteredGrid[randomIndex].color = 'rgba(255,255,255,1)';
-      filteredGrid[randomIndex].draw();
-    }
-  }, 1000);
-}
-random(); */
