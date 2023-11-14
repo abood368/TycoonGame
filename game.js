@@ -16,7 +16,7 @@ const shapes = {
         if (shape.color === 'rgba(255,255,255,1)' || shape.color === 'white') {
           if (!shape.clicked) {
             user.scored();
-            shape.color = 'rgba(0,0,0,1)';
+            shape.color = backgroundColor;
             shape.draw();
             mouse.reset();
           }
@@ -26,6 +26,7 @@ const shapes = {
   },
 
   isMouseOver: function () {
+    // this function is drawing over the original square, hence leaving that white outline. If you want to modify the original square, you have to implement a function inside of where the square is created or create a closure.
     for (let shape of this.list) {
       if (
         mouse.x > shape.x &&
@@ -36,7 +37,10 @@ const shapes = {
         if (shape.color === 'rgba(255,255,255,1)' || shape.color === 'white') {
           if (!shape.clicked) {
             user.scored();
-            shape.color = 'rgba(0,0,0,1)';
+            shape.color = backgroundColor;
+            shape.x--; // This is an attempt to fix the outline issue
+            shape.y--;
+            shape.size += 2;
             shape.draw();
             mouse.reset();
           }
@@ -95,6 +99,7 @@ function appear() {
         'rgba(255,255,255,1)'
       );
       shapes.list.push(square);
+      console.log(square.color);
       square.draw();
       console.log(square.color === 'rgba(255,255,255,1)');
       if (square.color === 'rgba(255,255,255,1)') {
@@ -111,9 +116,9 @@ function disappear(square) {
     setTimeout(() => {
       clearCanvas();
       shapes.list.pop();
-      square.color = 'rgba(0,0,0,1)';
+      square.color = backgroundColor;
       square.draw();
-      if (square.color === 'rgba(0,0,0,1)') {
+      if (square.color === backgroundColor) {
         resolve('It turned black');
       } else {
         reject('error');

@@ -1,3 +1,7 @@
+const background = document.querySelector('body');
+let backgroundColor = '#8a7b89';
+background.style.backgroundColor = backgroundColor;
+
 // Store canvas in Javascript Variable
 
 const canvas = document.querySelector('canvas');
@@ -37,7 +41,7 @@ const mouse = {
 
 // ELEMENTS IN CANVAS
 
-function Square(x, y, size, color = 'rgba(0,0,0,1)') {
+function Square(x, y, size, color = backgroundColor) {
   this.x = x;
   this.y = y;
   this.size = size;
@@ -60,7 +64,7 @@ function Square(x, y, size, color = 'rgba(0,0,0,1)') {
       if (this.color === 'rgba(255,255,255,1)' || this.color === 'white') {
         if (!this.clicked) {
           user.scored();
-          this.color = 'rgba(0,0,0,1)';
+          this.color = backgroundColor;
           mouse.reset();
         }
       }
