@@ -99,9 +99,7 @@ function appear() {
         'rgba(255,255,255,1)'
       );
       shapes.list.push(square);
-      console.log(square.color);
       square.draw();
-      console.log(square.color === 'rgba(255,255,255,1)');
       if (square.color === 'rgba(255,255,255,1)') {
         resolve(square); // return the square to use it in the promise chain.
       } else {

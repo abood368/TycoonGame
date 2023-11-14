@@ -10,45 +10,24 @@
     <script src="game.js" defer></script>
   </head>
   <body>
-    <header></header>
+    <header class="header">
+      <nav>
+        <button id="menu">
+          <div class="menu-bar"></div>
+          <div class="menu-bar"></div>
+          <div class="menu-bar"></div>
+        </button>
+      </nav>
+      <nav>
+        <button id="settings">⚙️</button>
+      </nav>
+    </header>
 
     <main class="container">
       <header class="top-bar">
-        <button id="menuBtn" onclick="hide(menu)">Menu</button>
         <span id="balance">$0</span>
-        <button id="shopBtn">Shop</button>
       </header>
       <canvas></canvas>
-      <!-- <aside id="menu" hidden>
-        <div class="overlay"></div>
-        <section class="menu-row">
-          <li class="menu-setting">Grid Size:</li>
-          <li class="menu-value">5x5</li>
-        </section>
-        <section class="menu-row">
-          <li class="menu-setting">Speed:</li>
-          <li class="menu-value">Normal</li>
-        </section>
-        <section class="menu-row">
-          <li class="menu-setting">Difficulty</li>
-          <li class="menu-value">Easy</li>
-        </section>
-        <section class="menu-row">
-          <li class="menu-setting">Color Theme:</li>
-          <li class="menu-value">Dark</li>
-        </section>
-      </aside>
-      <aside id="shop" hidden>
-        <div class="overlay"></div>
-        <section>
-          <ul>
-            <li>Multiplier:</li>
-            <li>Streak Bonus:</li>
-            <li>Speed Gainer:</li>
-            <li>Presige:</li>
-          </ul>
-        </section>
-      </aside> -->
       <footer class="footer">
         <button id="startGame" onclick="playGame()">Start Game</button>
         <button id="restart" onclick="endGame();">End Game</button>
